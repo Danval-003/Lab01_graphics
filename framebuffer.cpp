@@ -97,13 +97,13 @@ void renderBuffer() {
     bmpHeader.numImportantColors = 0;
 
     // Abrir el archivo BMP en modo binario para escritura
-    std::ofstream archivoBMP("out.bmp", std::ios::binary);
+    std::ofstream archivoBMP("../out.bmp", std::ios::binary);
 
     // Escribir el encabezado del archivo BMP
     archivoBMP.write(reinterpret_cast<const char*>(&bmpHeader), tamanoCabecera);
 
     // Escribir los datos de color del framebuffer en formato BGR
-    for (int y = pantallaAlto - 1; y >= 0; y--) {
+    for (int y = 0; y <pantallaAncho; y++) {
         for (int x = 0; x < pantallaAncho; x++) {
             archivoBMP.write(reinterpret_cast<const char*>(&framebuffer[y][x].blue), 1);
             archivoBMP.write(reinterpret_cast<const char*>(&framebuffer[y][x].green), 1);

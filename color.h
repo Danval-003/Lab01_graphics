@@ -97,4 +97,7 @@ extern Color NAVY_BLUE;
 extern Color BLACK;
 extern Color GRAY;
 extern Color YELLOW;
+extern Color BLUE;
+extern Color RED;
+extern Color GREEN;
 

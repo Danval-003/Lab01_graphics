@@ -206,6 +206,12 @@ void fillBucket(int x, int y, Color targetColor, Color fillColor) {
     fillBucket(x, y - 1, targetColor, fillColor); // Abajo
 }
 
+void point(Vertex2 punto, Color fillColor) {
+    if (punto.x >= 0 && punto.x < pantallaAncho && punto.y >= 0 && punto.y < pantallaAlto) {
+        framebuffer[punto.y][punto.x] = fillColor;
+    }
+}
+
 void fillBucket(int x, int y, Color targetColor, Color fillColor, Color strokeColor) {
     // Obtener el color del punto actual
     Color currentC= framebuffer[y][x];
@@ -220,9 +226,7 @@ void fillBucket(int x, int y, Color targetColor, Color fillColor, Color strokeCo
         return;
     }
 
-    // Cambiar el color del punto actual al color de relleno
-    currentColor = fillColor;
-    point(Vertex2(x, y));
+    point(Vertex2(x, y), fillColor);
 
     // Rellenar los píxeles vecinos recursivamente o iterativamente
     fillBucket(x + 1, y, targetColor, fillColor); // Derecha
