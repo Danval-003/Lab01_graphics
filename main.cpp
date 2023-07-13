@@ -1,4 +1,4 @@
-#include "Color.h"
+#include "color.h"
 #include <iostream>
 #include <vector>
 #include "framebuffer.h"
@@ -15,7 +15,7 @@ void render() {
     //std::vector<Vertex2> myVector = {{377, 249}, {411, 197}, {436, 249}};
 
     drawPoligon(myVector);
-    fillPoligon(myVector, YELLOW);
+    fillPoligon(myVector, YELLOW, WHITE, NAVY_BLUE);
     renderBuffer();
 }
 

@@ -23,4 +23,4 @@ void square(int height, int wight);
 
 void drawPoligon(const std::vector<Vertex2>& vec);
 
-void fillPoligon(const std::vector<Vertex2>& vertices, Color fillColor);
+void fillPoligon(const std::vector<Vertex2>& vertices, Color fillColor, Color strokeColor, Color backgroundColor);

@@ -181,31 +181,60 @@ Vertex2 getRandomPointInsidePolygon(const std::vector<Vertex2>& vertices) {
     }
 }
 
-
-
-void fillBucket(int x, int y, Color fillColor) {
+void fillBucket(int x, int y, Color targetColor, Color fillColor) {
     // Obtener el color del punto actual
-    Color bucketPointColor = framebuffer[y][x];
+    Color currentC= framebuffer[y][x];
+
+    // Verificar si el punto actual es diferente al color objetivo
+    if (currentC != targetColor) {
+        return;
+    }
 
     // Verificar si el punto actual ya está rellenado con el color de relleno
-    if (bucketPointColor == fillColor) {
+    if (currentC == fillColor) {
         return;
     }
 
     // Cambiar el color del punto actual al color de relleno
-    point(Vertex2(x,y));
+    currentColor = fillColor;
+    point(Vertex2(x, y));
 
     // Rellenar los píxeles vecinos recursivamente o iterativamente
-    fillBucket(x + 1, y, fillColor); // Derecha
-    fillBucket(x - 1, y, fillColor); // Izquierda
-    fillBucket(x, y + 1, fillColor); // Arriba
-    fillBucket(x, y - 1, fillColor); // Abajo
+    fillBucket(x + 1, y, targetColor, fillColor); // Derecha
+    fillBucket(x - 1, y, targetColor, fillColor); // Izquierda
+    fillBucket(x, y + 1, targetColor, fillColor); // Arriba
+    fillBucket(x, y - 1, targetColor, fillColor); // Abajo
+}
+
+void fillBucket(int x, int y, Color targetColor, Color fillColor, Color strokeColor) {
+    // Obtener el color del punto actual
+    Color currentC= framebuffer[y][x];
+
+    // Verificar si el punto actual es diferente al color objetivo
+    if (currentC != targetColor or currentC == strokeColor) {
+        return;
+    }
+
+    // Verificar si el punto actual ya está rellenado con el color de relleno
+    if (currentC == fillColor ) {
+        return;
+    }
+
+    // Cambiar el color del punto actual al color de relleno
+    currentColor = fillColor;
+    point(Vertex2(x, y));
+
+    // Rellenar los píxeles vecinos recursivamente o iterativamente
+    fillBucket(x + 1, y, targetColor, fillColor); // Derecha
+    fillBucket(x - 1, y, targetColor, fillColor); // Izquierda
+    fillBucket(x, y + 1, targetColor, fillColor); // Arriba
+    fillBucket(x, y - 1, targetColor, fillColor); // Abajo
 }
 
 
-void fillPoligon(const std::vector<Vertex2>& vertices, Color fillColor) {
+void fillPoligon(const std::vector<Vertex2>& vertices, Color fillColor, Color strokeColor, Color backgroundColor) {
     Vertex2 pointInPoligon = getRandomPointInsidePolygon(vertices);
-    fillBucket(pointInPoligon.x, pointInPoligon.y, currentColor);
+    fillBucket(pointInPoligon.x, pointInPoligon.y, backgroundColor, fillColor, strokeColor);
 }
 
 
