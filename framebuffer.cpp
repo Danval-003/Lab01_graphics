@@ -2,7 +2,7 @@
 #include "vertex2.h"
 #include <fstream>
 
-std::array<std::array<Color, pantallaAncho>, pantallaAlto> framebuffer;
+std::array<Color, pantallaAncho * pantallaAlto> framebuffer;
 Color clearColor(0, 0, 0);
 Color currentColor(0, 0, 0);
 
@@ -15,9 +15,11 @@ void clear() {
 
     auto clearPortion = [](unsigned int startY, unsigned int endY) {
         for (unsigned int y = startY; y < endY; y++) {
-            auto& row = framebuffer[y];
-            for (auto& pixel : row) {
-                pixel = clearColor;
+            unsigned int startPixelIndex = y * pantallaAncho;
+            unsigned int endPixelIndex = startPixelIndex + pantallaAncho;
+
+            for (unsigned int pixelIndex = startPixelIndex; pixelIndex < endPixelIndex; pixelIndex++) {
+                framebuffer[pixelIndex] = clearColor;
             }
         }
     };
@@ -103,12 +105,10 @@ void renderBuffer() {
     archivoBMP.write(reinterpret_cast<const char*>(&bmpHeader), tamanoCabecera);
 
     // Escribir los datos de color del framebuffer en formato BGR
-    for (int y = 0; y <pantallaAncho; y++) {
-        for (int x = 0; x < pantallaAncho; x++) {
-            archivoBMP.write(reinterpret_cast<const char*>(&framebuffer[y][x].blue), 1);
-            archivoBMP.write(reinterpret_cast<const char*>(&framebuffer[y][x].green), 1);
-            archivoBMP.write(reinterpret_cast<const char*>(&framebuffer[y][x].red), 1);
-        }
+    for (int i = 0; i < pantallaAncho * pantallaAlto; i++) {
+        archivoBMP.write(reinterpret_cast<const char*>(&framebuffer[i].blue), 1);
+        archivoBMP.write(reinterpret_cast<const char*>(&framebuffer[i].green), 1);
+        archivoBMP.write(reinterpret_cast<const char*>(&framebuffer[i].red), 1);
     }
 
     // Cerrar el archivo BMP

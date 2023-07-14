@@ -8,7 +8,7 @@ const int pantallaAncho = 800;
 const int pantallaAlto = 600;
 
 // Variable global: framebuffer
-extern std::array<std::array<Color, pantallaAncho>, pantallaAlto> framebuffer;
+extern std::array<Color, pantallaAncho * pantallaAlto> framebuffer;
 
 // Variable global: clearColor
 extern Color clearColor;
