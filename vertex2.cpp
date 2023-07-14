@@ -8,7 +8,8 @@ Vertex2 centerScreen(static_cast<int>(pantallaAncho/2), static_cast<int>(pantall
 // Función para pintar un punto en la pantalla en las coordenadas especificadas
 void point(Vertex2 punto) {
     if (punto.x >= 0 && punto.x < pantallaAncho && punto.y >= 0 && punto.y < pantallaAlto) {
-        framebuffer[punto.y][punto.x] = currentColor;
+        int posicion = punto.y * pantallaAncho + punto.x;
+        framebuffer[posicion] = currentColor;
     }
 }
 
@@ -183,7 +184,8 @@ Vertex2 getRandomPointInsidePolygon(const std::vector<Vertex2>& vertices) {
 
 void fillBucket(int x, int y, Color targetColor, Color fillColor) {
     // Obtener el color del punto actual
-    Color currentC= framebuffer[y][x];
+    int posicion = y * pantallaAncho + x;
+    Color currentC = framebuffer[posicion];
 
     // Verificar si el punto actual es diferente al color objetivo
     if (currentC != targetColor) {
@@ -208,31 +210,33 @@ void fillBucket(int x, int y, Color targetColor, Color fillColor) {
 
 void point(Vertex2 punto, Color fillColor) {
     if (punto.x >= 0 && punto.x < pantallaAncho && punto.y >= 0 && punto.y < pantallaAlto) {
-        framebuffer[punto.y][punto.x] = fillColor;
+        int posicion = punto.y * pantallaAncho + punto.x;
+        framebuffer[posicion] = fillColor;
     }
 }
 
 void fillBucket(int x, int y, Color targetColor, Color fillColor, Color strokeColor) {
     // Obtener el color del punto actual
-    Color currentC= framebuffer[y][x];
+    int posicion = y * pantallaAncho + x;
+    Color currentC = framebuffer[posicion];
 
     // Verificar si el punto actual es diferente al color objetivo
-    if (currentC != targetColor or currentC == strokeColor) {
+    if (currentC != targetColor || currentC == strokeColor) {
         return;
     }
 
     // Verificar si el punto actual ya está rellenado con el color de relleno
-    if (currentC == fillColor ) {
+    if (currentC == fillColor) {
         return;
     }
 
     point(Vertex2(x, y), fillColor);
 
     // Rellenar los píxeles vecinos recursivamente o iterativamente
-    fillBucket(x + 1, y, targetColor, fillColor); // Derecha
-    fillBucket(x - 1, y, targetColor, fillColor); // Izquierda
-    fillBucket(x, y + 1, targetColor, fillColor); // Arriba
-    fillBucket(x, y - 1, targetColor, fillColor); // Abajo
+    fillBucket(x + 1, y, targetColor, fillColor, strokeColor); // Derecha
+    fillBucket(x - 1, y, targetColor, fillColor, strokeColor); // Izquierda
+    fillBucket(x, y + 1, targetColor, fillColor, strokeColor); // Arriba
+    fillBucket(x, y - 1, targetColor, fillColor, strokeColor); // Abajo
 }
 
 
