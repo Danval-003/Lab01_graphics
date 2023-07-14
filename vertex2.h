@@ -6,7 +6,7 @@ struct Vertex2 {
     int x;
     int y;
     Vertex2(): x(0), y(0) {};
-    Vertex2(int x, int y): x(x), y(y) {};
+    Vertex2(float x, float y): x(static_cast<int>(x)), y(static_cast<int>(y)) {};
 };
 
 void point(Vertex2 punto);  // Declaración de la función punto()
