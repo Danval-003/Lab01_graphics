@@ -19,7 +19,7 @@ void render() {
 
     //std::vector<Vertex2> myVector2 = {{682, 175}, {708, 120}, {735, 148}, {739, 170}};
     drawPoligon(myVector);
-    fillPoligon(myVector, GREEN, WHITE, NAVY_BLUE);
+    fillPoligon(myVector, RED, WHITE, NAVY_BLUE);
     //currentColor=WHITE;
     //drawPoligon(myVector2);
     //fillPoligon(myVector2,NAVY_BLUE, WHITE, GREEN );
