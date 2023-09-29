@@ -1,6 +1,9 @@
+#pragma once
 #include "framebuffer.h"
 #include "vertex2.h"
 #include <fstream>
+using namespace std;
+
 
 std::array<std::array<Color, pantallaAncho>, pantallaAlto> framebuffer;
 Color clearColor(0, 0, 0);
@@ -11,7 +14,7 @@ Color currentColor(0, 0, 0);
 #include <vector>
 
 void clear() {
-    const unsigned int numThreads = std::thread::hardware_concurrency();
+    const unsigned int numThreads = thread::hardware_concurrency();
 
     auto clearPortion = [](unsigned int startY, unsigned int endY) {
         for (unsigned int y = startY; y < endY; y++) {
@@ -97,13 +100,13 @@ void renderBuffer() {
     bmpHeader.numImportantColors = 0;
 
     // Abrir el archivo BMP en modo binario para escritura
-    std::ofstream archivoBMP("out.bmp", std::ios::binary);
+    std::ofstream archivoBMP("../out.bmp", std::ios::binary);
 
     // Escribir el encabezado del archivo BMP
     archivoBMP.write(reinterpret_cast<const char*>(&bmpHeader), tamanoCabecera);
 
     // Escribir los datos de color del framebuffer en formato BGR
-    for (int y = pantallaAlto - 1; y >= 0; y--) {
+    for (int y = 0; y <= pantallaAlto -1; y++) {
         for (int x = 0; x < pantallaAncho; x++) {
             archivoBMP.write(reinterpret_cast<const char*>(&framebuffer[y][x].blue), 1);
             archivoBMP.write(reinterpret_cast<const char*>(&framebuffer[y][x].green), 1);

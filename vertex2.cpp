@@ -1,7 +1,9 @@
+#pragma once
 #include "vertex2.h"
 #include "framebuffer.h"
 #include <cmath>
 #include <vector>
+
 
 Vertex2 centerScreen(static_cast<int>(pantallaAncho/2), static_cast<int>(pantallaAlto/2));
 
